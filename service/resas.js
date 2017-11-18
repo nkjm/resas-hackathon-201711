@@ -16,7 +16,7 @@ module.exports = class ServiceResas {
         return this._get("api/v1/prefectures");
     }
 
-    get_estate_transation(params){
+    get_estate_transaction(params){
         return this._get(`api/v1/townPlanning/estateTransaction/bar?year=${params.year}&prefCode=${params.prefCode}&cityCode=${params.cityCode}&displayType=${params.displayType}`)
     }
 
