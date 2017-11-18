@@ -5,22 +5,19 @@ const debug = require("debug")("bot-express:service");
 Promise = require("bluebird");
 Promise.promisifyAll(request);
 
-const endpoint = "https://opendata.resas-portal.go.jp";
+const endpoint = "https://apex.oracle.com/pls/apex/evangelist/resas";
 
-module.exports = class ServiceResas {
+module.exports = class ServiceDb {
     constructor(api_key){
         this.api_key = api_key;
     }
 
-    get_prefectures(){
-        return this._get("api/v1/prefectures");
+    get_guide(hwid){
+        return this._get("guide/" + hwid);
     }
 
     _get(path){
         let url = endpoint + "/" + path;
-        let headers = {
-            "X-API-KEY": this.api_key
-        }
         return request.getAsync({
             url: url,
             headers: headers,
@@ -28,8 +25,6 @@ module.exports = class ServiceResas {
         }).then((response) => {
             if (response.statusCode != 200){
                 return Promise.reject(new Error(`GET ${url} failed.`));
-            } else if (response.body.statusCode){
-                return Promise.reject(new Error(response.body.description));
             } else {
                 return response.body;
             }
