@@ -8,15 +8,11 @@ Promise.promisifyAll(request);
 const endpoint = "https://apex.oracle.com/pls/apex/evangelist/resas";
 
 module.exports = class ServiceDb {
-    constructor(api_key){
-        this.api_key = api_key;
+    static get_guide(hwid){
+        return ServiceDb._get("guide/" + hwid);
     }
 
-    get_guide(hwid){
-        return this._get("guide/" + hwid);
-    }
-
-    _get(path){
+    static _get(path){
         let url = endpoint + "/" + path;
         return request.getAsync({
             url: url,
