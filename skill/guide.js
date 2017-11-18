@@ -16,6 +16,7 @@ module.exports = class SkillGuide {
         }
 
         return db.get_guide(event.beacon.hwid).then((response) => {
+            debug(response);
             return bot.reply({
                 type: "text",
                 text: response.message
