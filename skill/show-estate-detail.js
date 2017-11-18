@@ -9,18 +9,7 @@ module.exports = class SkillShowEstateDetail {
     constructor(){
         this.required_parameter = {
             interested: {
-                message_to_confirm: {
-                    type: "template",
-                    altText: `こちらの${context.confirmed.estate.name}の物件、チェックしますか？（はい・いいえ）`,
-                    template: {
-                        type: "confirm",
-                        text: `こちらの${context.confirmed.estate.name}の物件、チェックしますか？`,
-                        actions: [
-                            {type:"message", label:"はい", text:"はい"},
-                            {type:"message", label:"いいえ", text:"いいえ"}
-                        ]
-                    }
-                },
+                message_to_confirm: {},
                 parser: (value, bot, event, context, resolve, reject) => {
                     if (value == "はい"){
                         return resolve(true);
@@ -41,6 +30,18 @@ module.exports = class SkillShowEstateDetail {
 
         return db.get_estate(context.confirmed.hwid).then((response) => {
             context.confirmed.estate = response;
+            bot.change_message_to_confirm("interested", {
+                type: "template",
+                altText: `こちらの${context.confirmed.estate.name}の物件、チェックしますか？（はい・いいえ）`,
+                template: {
+                    type: "confirm",
+                    text: `こちらの${context.confirmed.estate.name}の物件、チェックしますか？`,
+                    actions: [
+                        {type:"message", label:"はい", text:"はい"},
+                        {type:"message", label:"いいえ", text:"いいえ"}
+                    ]
+                }
+            });
             return resolve();
         });
     }
