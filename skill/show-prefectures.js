@@ -1,6 +1,7 @@
 "use strict";
 
-const resas = new require("../service/resas")(process.env.RESAS_API_KEY);
+const Resas = require("../service/resas");
+const resas = new Resas(process.env.RESAS_API_KEY));
 
 module.exports = class SkillShowPrefecture {
     constructor(){
