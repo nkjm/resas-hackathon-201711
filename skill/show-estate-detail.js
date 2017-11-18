@@ -69,7 +69,7 @@ module.exports = class SkillShowEstateDetail {
             let messages = [];
             messages.push({
                 type: "text",
-                text: `こちらの物件、価格は${estate.price}万円、面積は${estate.area}平米になります。ちなみにこのあたりの平均不動産取引価格は平米あたり${transaction.value}です。`
+                text: `こちらの物件、価格は${context.confirmed.estate.price}万円、面積は${context.confirmed.estate.area}平米になります。ちなみにこのあたりの平均不動産取引価格は平米あたり${transaction.value}です。`
             });
             messages.push({
                 type: "template",
@@ -78,7 +78,7 @@ module.exports = class SkillShowEstateDetail {
                     type: "buttons",
                     text: "さらに詳しい物件情報を見る場合はこちらを参照ください。",
                     actions: [
-                        {type:"web_url", label:"詳細情報", url:estate.brocher_url}
+                        {type:"web_url", label:"詳細情報", url:context.confirmed.estate.brocher_url}
                     ]
                 }
             });
