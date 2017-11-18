@@ -31,7 +31,8 @@ app.use("/webhook", bot_express({
     auto_translation: process.env.AUTO_TRANSLATION,
     beacon_skill: {
         enter: "show-estate-detail"
-    }
+    },
+    default_skill: process.env.DEFAULT_SKILL
 }));
 
 module.exports = app;
