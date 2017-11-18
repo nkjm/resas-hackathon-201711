@@ -16,7 +16,6 @@ module.exports = class ServiceDb {
         let url = endpoint + "/" + path;
         return request.getAsync({
             url: url,
-            headers: headers,
             json: true
         }).then((response) => {
             if (response.statusCode != 200){
