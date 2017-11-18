@@ -65,7 +65,7 @@ module.exports = class SkillShowEstateDetail {
 
             return Promise.all(tasks);
         }).then((response) => {
-            let transaction = resposne[0].result.years[0];
+            let transaction = response[0].result.years[0];
             let messages = [];
             messages.push({
                 type: "text",
