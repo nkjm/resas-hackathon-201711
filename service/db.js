@@ -21,7 +21,10 @@ module.exports = class ServiceDb {
             if (response.statusCode != 200){
                 return Promise.reject(new Error(`GET ${url} failed.`));
             } else {
-                return response.body;
+                if (!response.body.items || response.body.items.length === 0){
+                    return null;
+                }
+                return response.body.items[0];
             }
         });
     }
