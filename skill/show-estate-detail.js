@@ -34,10 +34,6 @@ module.exports = class SkillShowEstateDetail {
     }
 
     finish(bot, event, context, resolve, reject){
-        if (event.type != "beacon" || !event.beacon || event.beacon.type != "enter" || !event.beacon.hwid){
-            return resolve();
-        }
-
         if (!context.confirmed.interested){
             return bot.reply({
                 type: "text",
