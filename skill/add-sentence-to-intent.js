@@ -2,7 +2,7 @@
 
 const debug = require("debug")("bot-express:skill");
 const fs = require("fs");
-const apiai = require("../service/apiai");
+const apiai = require("../service/dialogflow");
 const sharp = require("sharp");
 const Dropbox = require("dropbox");
 const request = require("request");

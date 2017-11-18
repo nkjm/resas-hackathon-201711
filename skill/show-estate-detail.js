@@ -28,6 +28,8 @@ module.exports = class SkillShowEstateDetail {
         }
         context.confirmed.hwid = event.beacon.hwid;
 
+        let tasks = [];
+
         return db.get_estate(context.confirmed.hwid).then((response) => {
             context.confirmed.estate = response;
             bot.change_message_to_confirm("interested", {
@@ -42,6 +44,12 @@ module.exports = class SkillShowEstateDetail {
                     ]
                 }
             });
+            return db.save_log({
+                estated_id: context.confirmed.estate.id,
+                user_id: bot.extract_sender_id(),
+                type: "beacon"
+            });
+        }).then((response) => {
             return resolve();
         });
     }

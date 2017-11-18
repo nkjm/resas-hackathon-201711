@@ -12,6 +12,10 @@ module.exports = class ServiceDb {
         return ServiceDb._get("estate/" + hwid);
     }
 
+    static save_log(params){
+        return ServiceDb._post("log", params);
+    }
+
     static _get(path){
         let url = endpoint + "/" + path;
         return request.getAsync({
@@ -26,6 +30,20 @@ module.exports = class ServiceDb {
                 }
                 return response.body.items[0];
             }
+        });
+    }
+
+    static _post(path, params){
+        let url = endpoint + "/" + path;
+        return request.postAsync({
+            url: url,
+            body: params,
+            json: true
+        }).then((response) => {
+            if (response.statusCode != 200){
+                return Promise.reject(new Error(`GET ${url} failed.`));
+            }
+            return response.body;
         });
     }
 }

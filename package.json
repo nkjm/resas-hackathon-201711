@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/nkjm/resas#readme",
   "dependencies": {
-    "bot-express": "0.0.133"
+    "bot-express": "0.0.133",
+    "dropbox": "^2.5.12",
+    "sharp": "^0.18.4"
   }
 }
