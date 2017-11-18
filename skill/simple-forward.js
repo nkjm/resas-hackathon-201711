@@ -1,9 +1,7 @@
 "use strict";
 
 const debug = require("debug")("bot-express:skill");
-const db = require("../service/kozu-db");
-const app_env = require("../environment_variables");
-const BOT_ID = app_env.BOT_ID;
+const admin_user_id = process.env.ADMIN_USER_ID;
 Promise = require("bluebird");
 
 /*
@@ -49,42 +47,42 @@ module.exports = class SkillSimpleForward {
 
         // Send message to admin.
         let interval = 500;
-        let admin_user_id_list = [];
         tasks.push(
             Promise.resolve()
             .then((response) => {
-                // Get admin list.
-                return db.get_admin_list();
-            })
-            .then((response) => {
-                // Save admin list.
-                debug(`There are ${response.length} admins to escalate.`);
-                if (response.length === 0){
-                    return Promise.reject(new Error(`There is no admin.`));
-                }
-
-                for (let admin of response){
-                    admin_user_id_list.push(admin.user_id);
-                }
-
                 // Get user's displayName.
                 return bot.plugin.line.sdk.getProfile(bot.extract_sender_id());
             })
             .then((response) => {
-                let message = {
-                    type: "text",
-                    text: `${response.displayName}さんからいただいた次のメッセージがわかりませんでした。`
-                };
+                let message;
+
+                if (context.confirmed.estate){
+                    message = {
+                        type: "template",
+                        altText: `${response.displayName}さんからこちらの物件について質問をいただいています。`,
+                        template: {
+                            type: "buttons",
+                            text: `${response.displayName}さんからこちらの物件について質問をいただいています。`,
+                            actions: [
+                                {type: "uri", label: "物件詳細", uri: context.confirmed.estate.brocher_url}
+                            ]
+                        }
+                    };
+                } else {
+                    message = {
+                        type: "text",
+                        text: `${response.displayName}さんからいただいた次のメッセージがわかりませんでした。`
+                    };
+                }
 
                 // Send 1st message to admin.
-                debug(admin_user_id_list);
-                return bot.multicast(admin_user_id_list, message);
+                return bot.send(admin_user_id, message);
             })
             .delay(interval).then((response) => {
                 // Send original message.
                 let message = JSON.parse(JSON.stringify(event.message));
                 delete message.id;
-                return bot.multicast(admin_user_id_list, message);
+                return bot.send(admin_user_id, message);
             })
             .delay(interval).then((response) => {
                 // Send action message.
@@ -100,7 +98,7 @@ module.exports = class SkillSimpleForward {
                         ]
                     }
                 }
-                return bot.multicast(admin_user_id_list, message);
+                return bot.send(admin_user_id, message);
             })
         );
 
