@@ -38,6 +38,7 @@ module.exports = class SkillShowEstateDetail {
             return resolve();
         }
         context.confirmed.hwid = event.beacon.hwid;
+        return resolve();
     }
 
     finish(bot, event, context, resolve, reject){
