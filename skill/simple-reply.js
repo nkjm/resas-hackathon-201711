@@ -26,7 +26,6 @@ module.exports = class SkillSimpleReply {
         let first_message = context.previous.message[context.previous.message.length - 1];
 
         let first_message_text = first_message.message.data;
-        }
 
         // Promise List.
         let tasks = [];

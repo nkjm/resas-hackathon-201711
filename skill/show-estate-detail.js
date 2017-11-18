@@ -32,10 +32,10 @@ module.exports = class SkillShowEstateDetail {
             context.confirmed.estate = response;
             bot.change_message_to_confirm("interested", {
                 type: "template",
-                altText: `こちらの${context.confirmed.estate.name}の物件、チェックしますか？（はい・いいえ）`,
+                altText: `今見てらっしゃるの${context.confirmed.estate.name}の物件、チェックしますか？（はい・いいえ）`,
                 template: {
                     type: "confirm",
-                    text: `こちらの${context.confirmed.estate.name}の物件、チェックしますか？`,
+                    text: `今見てらっしゃるの${context.confirmed.estate.name}の物件、チェックしますか？`,
                     actions: [
                         {type:"message", label:"はい", text:"はい"},
                         {type:"message", label:"いいえ", text:"いいえ"}
