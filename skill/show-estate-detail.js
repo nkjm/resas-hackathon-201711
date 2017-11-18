@@ -11,10 +11,10 @@ module.exports = class SkillShowEstateDetail {
             interested: {
                 message_to_confirm: {
                     type: "template",
-                    altText: "こちらの物件、チェックしますか？（はい・いいえ）",
+                    altText: `こちらの${context.confirmed.estate.name}の物件、チェックしますか？（はい・いいえ）`,
                     template: {
                         type: "confirm",
-                        text: "こちらの物件、チェックしますか？",
+                        text: `こちらの${context.confirmed.estate.name}の物件、チェックしますか？`,
                         actions: [
                             {type:"message", label:"はい", text:"はい"},
                             {type:"message", label:"いいえ", text:"いいえ"}
@@ -38,7 +38,11 @@ module.exports = class SkillShowEstateDetail {
             return resolve();
         }
         context.confirmed.hwid = event.beacon.hwid;
-        return resolve();
+
+        return db.get_estate(context.confirmed.hwid).then((response) => {
+            context.confirmed.estate = response;
+            return resolve();
+        });
     }
 
     finish(bot, event, context, resolve, reject){
@@ -51,20 +55,17 @@ module.exports = class SkillShowEstateDetail {
             });
         }
 
-        return db.get_estate(context.confirmed.hwid).then((response) => {
-            context.confirmed.estate = response;
 
-            let tasks = [];
+        let tasks = [];
 
-            tasks.push(resas.get_estate_transaction({
-                year: 2015,
-                prefCode: context.confirmed.estate.pref_code,
-                cityCode: context.confirmed.estate.city_code,
-                displayType: 1
-            }));
+        tasks.push(resas.get_estate_transaction({
+            year: 2015,
+            prefCode: context.confirmed.estate.pref_code,
+            cityCode: context.confirmed.estate.city_code,
+            displayType: 1
+        }));
 
-            return Promise.all(tasks);
-        }).then((response) => {
+        Promise.all(tasks).then((response) => {
             let transaction = response[0].result.years[0];
             let messages = [];
             messages.push({

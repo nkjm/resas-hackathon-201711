@@ -59,10 +59,10 @@ module.exports = class SkillSimpleForward {
                 if (context.confirmed.estate){
                     message = {
                         type: "template",
-                        altText: `${response.displayName}さんからこちらの物件について質問をいただいています。`,
+                        altText: `${response.displayName}さんからこちらの物件について下記の質問をいただいています。`,
                         template: {
                             type: "buttons",
-                            text: `${response.displayName}さんからこちらの物件について質問をいただいています。`,
+                            text: `${response.displayName}さんからこちらの物件について下記の質問をいただいています。`,
                             actions: [
                                 {type: "uri", label: "物件詳細", uri: context.confirmed.estate.brocher_url}
                             ]
