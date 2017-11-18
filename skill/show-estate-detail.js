@@ -17,6 +17,21 @@ module.exports = class SkillShowEstateDetail {
                         return resolve(false);
                     }
                     return reject();
+                },
+                reaction: (error, value, bot, event, context, resolve, reject) => {
+                    if (error){
+                        return resolve();
+                    }
+                    if (value === true){
+                        return db.save_log({
+                            estate_id: context.confirmed.estate.id,
+                            user_id: bot.extract_sender_id(),
+                            type: "interested"
+                        }).then((response) => {
+                            return resolve();
+                        });
+                    }
+                    return resolve();
                 }
             }
         }
