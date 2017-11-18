@@ -30,7 +30,7 @@ app.use("/webhook", bot_express({
     google_project_id: process.env.GOOGLE_PROJECT_ID,
     auto_translation: process.env.AUTO_TRANSLATION,
     beacon_skill: {
-        enter: "guide"
+        enter: "show-estate-detail"
     }
 }));
 
