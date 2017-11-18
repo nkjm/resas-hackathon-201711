@@ -1,5 +1,7 @@
-"use strict"
+"use strict";
+
 const request = require("request");
+const debug = require("debug")("bot-express:service");
 Promise = require("bluebird");
 Promise.promisifyAll(request);
 
@@ -26,7 +28,8 @@ module.exports = class ServiceResas {
         }).then((response) => {
             if (response.statusCode != 200){
                 return Promise.reject(new Error(`GET ${url} failed.`));
-            } else if (response.body.statusCode != 200){
+            } else if (response.body.statusCode && response.body.statusCode != 200){
+                debug(response.body);
                 return Promise.reject(new Error(response.body.description));
             } else {
                 return response.body;
