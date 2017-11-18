@@ -33,6 +33,13 @@ module.exports = class SkillShowEstateDetail {
         }
     }
 
+    begin(bot, event, context, resolve, reject){
+        if (event.type != "beacon" || !event.beacon || event.beacon.type != "enter" || !event.beacon.hwid){
+            return resolve();
+        }
+        context.confirmed.hwid = event.beacon.hwid;
+    }
+
     finish(bot, event, context, resolve, reject){
         if (!context.confirmed.interested){
             return bot.reply({
@@ -43,7 +50,7 @@ module.exports = class SkillShowEstateDetail {
             });
         }
 
-        return db.get_estate(event.beacon.hwid).then((response) => {
+        return db.get_estate(context.confirmed.hwid).then((response) => {
             context.confirmed.estate = response;
 
             let tasks = [];
