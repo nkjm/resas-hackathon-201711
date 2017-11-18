@@ -1,0 +1,28 @@
+{
+  "name": "resas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkjm/resas.git"
+  },
+  "keywords": [
+    "resas",
+    "chatbot",
+    "bot",
+    "line"
+  ],
+  "author": "Kazuki Nakajima",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nkjm/resas/issues"
+  },
+  "homepage": "https://github.com/nkjm/resas#readme",
+  "dependencies": {
+    "bot-express": "0.0.133"
+  }
+}
