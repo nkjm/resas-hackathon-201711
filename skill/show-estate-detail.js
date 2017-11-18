@@ -45,7 +45,7 @@ module.exports = class SkillShowEstateDetail {
                 }
             });
             return db.save_log({
-                estated_id: context.confirmed.estate.id,
+                estate_id: context.confirmed.estate.id,
                 user_id: bot.extract_sender_id(),
                 type: "beacon"
             });
