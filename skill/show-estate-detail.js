@@ -78,7 +78,7 @@ module.exports = class SkillShowEstateDetail {
                     type: "buttons",
                     text: "さらに詳しい物件情報を見る場合はこちらを参照ください。",
                     actions: [
-                        {type:"web_url", label:"詳細情報", url:context.confirmed.estate.brocher_url}
+                        {type:"uri", label:"詳細情報", uri:context.confirmed.estate.brocher_url}
                     ]
                 }
             });
