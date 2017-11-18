@@ -69,7 +69,7 @@ module.exports = class SkillShowEstateDetail {
             let messages = [];
             messages.push({
                 type: "text",
-                text: `こちらの物件、価格は${context.confirmed.estate.price}万円、面積は${context.confirmed.estate.area}平米になります。ちなみにこのあたりの平均不動産取引価格は平米あたり${transaction.value}です。`
+                text: `こちらの物件、価格は${context.confirmed.estate.price}万円、面積は${context.confirmed.estate.area}平米になります。ちなみにこのあたりの平均不動産取引価格は平米あたり${Math.floor(transaction.value / 10000)}万円です。`
             });
             messages.push({
                 type: "template",
