@@ -15,8 +15,6 @@ const SUPPORTED_MESSAGE_TYPES = ["text", "sticker", "location"];
 const IMMEDIATE_REPLY = process.env.SIMPLE_FORWARD_IMMEDIATE_REPLY;
 
 module.exports = class SkillSimpleForward {
-    constructor(messenger, event){
-    }
 
     finish(bot, event, context, resolve, reject){
         if (!SUPPORTED_MESSENGERS.includes(bot.type)){
