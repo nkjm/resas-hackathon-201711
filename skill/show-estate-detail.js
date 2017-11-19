@@ -98,10 +98,10 @@ module.exports = class SkillShowEstateDetail {
             });
             messages.push({
                 type: "template",
-                altText: "さらに詳しい物件情報を見る場合はこちらを参照ください。",
+                altText: "こちらから資料もご覧いただけますので。何かご質問あればお気軽にどうぞ。",
                 template: {
                     type: "buttons",
-                    text: "さらに詳しい物件情報を見る場合はこちらを参照ください。",
+                    text: "こちらから資料もご覧いただけますので。何かご質問あればお気軽にどうぞ。",
                     actions: [
                         {type:"uri", label:"詳細情報", uri:context.confirmed.estate.brocher_url}
                     ]
