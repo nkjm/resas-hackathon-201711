@@ -45,6 +45,20 @@ module.exports = class SkillSimpleForward {
             tasks.push(bot.reply(IMMEDIATE_REPLY_MESSAGE[offset]));
         }
 
+        // Save save
+        if (context.confirmed.estate){
+            tasks.push(
+                Promise.resolve()
+                .then((response) => {
+                    return db.save_log({
+                        estate_id: context.confirmed.estate.id,
+                        user_id: bot.extract_sender_id(),
+                        type: "question"
+                    })
+                })
+            );
+        }
+
         // Send message to admin.
         let interval = 500;
         tasks.push(
