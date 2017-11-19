@@ -122,8 +122,7 @@ module.exports = class SkillSimpleForward {
                         type: "buttons",
                         text: `さて、どうしますか？`,
                         actions: [
-                            {type: "postback", label: "ユーザーに返信する", data: `次のユーザーに返信してください。 ${bot.extract_sender_id()}`},
-                            {type: "postback", label: "Botに学習させる", data: `${bot.extract_sender_id()} からの次の表現をインテントに追加してください。 ${bot.extract_message_text()}`}
+                            {type: "postback", label: "ユーザーに返信する", data: `次のユーザーに返信してください。 ${bot.extract_sender_id()}`}
                         ]
                     }
                 }

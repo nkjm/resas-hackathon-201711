@@ -118,20 +118,6 @@ module.exports = class SkillShowEstateDetail {
                 text: message_text
             });
 
-            /*
-            messages.push({
-                type: "template",
-                altText: "こちらから資料もご覧いただけますので。何かご質問あればお気軽にどうぞ。",
-                template: {
-                    type: "buttons",
-                    text: "こちらから資料もご覧いただけますので。何かご質問あればお気軽にどうぞ。",
-                    actions: [
-                        {type:"uri", label:"詳細情報", uri:context.confirmed.estate.brocher_url}
-                    ]
-                }
-            });
-            */
-
             return bot.reply(messages);
         }).then((response) => {
             return resolve();
