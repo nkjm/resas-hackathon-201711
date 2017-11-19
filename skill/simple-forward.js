@@ -46,8 +46,8 @@ module.exports = class SkillSimpleForward {
             tasks.push(bot.reply(IMMEDIATE_REPLY_MESSAGE[offset]));
         }
 
-        // Save save
-        if (context.confirmed.estate){
+        if (context.confirmed.estate && event.type == "message" && event.message.type == "text"){
+            // Save log
             tasks.push(
                 Promise.resolve()
                 .then((response) => {
@@ -58,6 +58,18 @@ module.exports = class SkillSimpleForward {
                     })
                 })
             );
+
+            // Save question
+            tasks.push(
+                Promise.resolve()
+                .then((response) => {
+                    return db.save_question({
+                        estate_id: context.confirmed.estate.id,
+                        user_id: bot.extract_sender_id(),
+                        question: event.message.text
+                    })
+                })
+            )
         }
 
         // Send message to admin.
@@ -71,7 +83,7 @@ module.exports = class SkillSimpleForward {
             .then((response) => {
                 let message;
 
-                if (context.confirmed.estate){
+                if (context.confirmed.estate && event.type == "message" && event.message.type == "text"){
                     message = {
                         type: "template",
                         altText: `${response.displayName}さんからこちらの物件について下記の質問をいただいています。`,

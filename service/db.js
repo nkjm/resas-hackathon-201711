@@ -16,6 +16,10 @@ module.exports = class ServiceDb {
         return ServiceDb._post("log", params);
     }
 
+    static save_question(params){
+        return ServiceDb._post("question", params);
+    }
+
     static _get(path){
         let url = endpoint + "/" + path;
         return request.getAsync({
