@@ -96,7 +96,7 @@ module.exports = class SkillShowEstateDetail {
             let avg_value = Math.floor(transaction.value / 10000 * context.confirmed.estate.area);
             debug("avg_value is " + avg_value);
 
-            let message_text = `こちらの物件、敷地面積は${context.confirmed.estate.area}平米、価格は${context.confirmed.estate.price}万円になります。\nちなみにこのあたりの平均不動産取引価格は平米あたり${Math.floor(transaction.value / 10000)}万円ですから、相場から見ると`;
+            let message_text = `こちらの物件、敷地面積は${context.confirmed.estate.area}平米、価格は${context.confirmed.estate.price}万円になります。\n\nちなみにこのあたりの平均不動産取引価格は平米あたり${Math.floor(transaction.value / 10000)}万円ですから、相場から見ると`;
             if (context.confirmed.estate.price > avg_value){
                 if (context.confirmed.estate.price - 300 > avg_value){
                     message_text += `かなり高いですね。`;
