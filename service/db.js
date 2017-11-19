@@ -45,7 +45,7 @@ module.exports = class ServiceDb {
             json: true
         }).then((response) => {
             if (response.statusCode != 200){
-                return Promise.reject(new Error(`GET ${url} failed.`));
+                return Promise.reject(new Error(`POST ${url} failed.`));
             }
             return response.body;
         });

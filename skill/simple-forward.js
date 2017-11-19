@@ -63,11 +63,14 @@ module.exports = class SkillSimpleForward {
             tasks.push(
                 Promise.resolve()
                 .then((response) => {
+                    return bot.plugin.line.sdk.getProfile(bot.extract_sender_id());
+                }).then((response) => {
                     return db.save_question({
                         estate_id: context.confirmed.estate.id,
                         user_id: bot.extract_sender_id(),
+                        user_display_name: response.displayName,
                         question: event.message.text
-                    })
+                    });
                 })
             )
         }
