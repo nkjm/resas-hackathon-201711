@@ -23,10 +23,10 @@ module.exports = class SkillShowEstateDrawing {
             text: "こちらになります。"
         },{
             type: "image",
-            orginalContentUrl: context.confirmed.estate.drawing_orig_url,
+            originalContentUrl: context.confirmed.estate.drawing_orig_url,
             previewImageUrl: context.confirmed.estate.drawing_prev_url
         }];
-        
+
         return bot.reply(messages).then((response) => {
             return resolve();
         });
