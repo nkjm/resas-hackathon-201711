@@ -16,7 +16,6 @@ const IMMEDIATE_REPLY = process.env.SIMPLE_FORWARD_IMMEDIATE_REPLY;
 
 module.exports = class SkillSimpleForward {
     constructor(messenger, event){
-        this.clear_context_on_finish = true;
     }
 
     finish(bot, event, context, resolve, reject){
@@ -89,10 +88,10 @@ module.exports = class SkillSimpleForward {
                 if (context.confirmed.estate && event.type == "message" && event.message.type == "text"){
                     message = {
                         type: "template",
-                        altText: `${response.displayName}さんからこちらの物件について下記の質問をいただいています。`,
+                        altText: `${response.displayName}さんから${context.confirmed.estate.name}の物件について下記の質問をいただいています。`,
                         template: {
                             type: "buttons",
-                            text: `${response.displayName}さんからこちらの物件について下記の質問をいただいています。`,
+                            text: `${response.displayName}さんから${context.confirmed.estate.name}の物件について下記の質問をいただいています。`,
                             actions: [
                                 {type: "uri", label: "物件詳細", uri: context.confirmed.estate.brocher_url}
                             ]
