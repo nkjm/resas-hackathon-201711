@@ -92,10 +92,33 @@ module.exports = class SkillShowEstateDetail {
         Promise.all(tasks).then((response) => {
             let transaction = response[0].result.years[0];
             let messages = [];
+
+            let avg_value = Math.floor(transaction.value / 10000 * context.confirmed.estate.area);
+            debug("avg_value is " + avg_value);
+
+            let message_text = `こちらの物件、敷地面積は${context.confirmed.estate.area}平米、価格は${context.confirmed.estate.price}万円になります。ちなみにこのあたりの平均不動産取引価格は平米あたり${Math.floor(transaction.value / 10000)}万円ですから、相場から見ると`;
+            if (context.confirmed.estate.price > avg_value){
+                if (context.confirmed.estate.price - 300 > avg_value){
+                    message_text += `かなり高いですね。`;
+                } else {
+                    message_text += `ちょっと高いですね。`;
+                }
+            } else if (context.confirmed.estate.price < avg_value){
+                if (context.confirmed.estate.price + 300 < avg_value){
+                    message_text += `かなり安いですね。`;
+                } else {
+                    message_text += `ちょっと安いですね。`;
+                }
+            } else {
+                message_text += `ちょうど平均価格ですね。`;
+            }
+
             messages.push({
                 type: "text",
-                text: `こちらの物件、価格は${context.confirmed.estate.price}万円、面積は${context.confirmed.estate.area}平米になります。ちなみにこのあたりの平均不動産取引価格は平米あたり${Math.floor(transaction.value / 10000)}万円です。`
+                text: message_text
             });
+            
+            /*
             messages.push({
                 type: "template",
                 altText: "こちらから資料もご覧いただけますので。何かご質問あればお気軽にどうぞ。",
@@ -107,6 +130,8 @@ module.exports = class SkillShowEstateDetail {
                     ]
                 }
             });
+            */
+
             return bot.reply(messages);
         }).then((response) => {
             return resolve();
