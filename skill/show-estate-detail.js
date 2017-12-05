@@ -38,13 +38,15 @@ module.exports = class SkillShowEstateDetail {
     }
 
     begin(bot, event, context, resolve, reject){
+        /*
         if (event.type != "beacon" || !event.beacon || event.beacon.type != "enter" || !event.beacon.hwid){
             return resolve();
         }
         context.confirmed.hwid = event.beacon.hwid;
+        */
 
         let tasks = [];
-
+        context.confirmed.hwid = '010b5fb92a';
         return db.get_estate(context.confirmed.hwid).then((response) => {
             context.confirmed.estate = response;
             bot.change_message_to_confirm("interested", {
