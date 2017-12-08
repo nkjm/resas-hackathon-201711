@@ -1,6 +1,6 @@
 {
   "name": "resas",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Real estate consulting bot.",
   "main": "index.js",
   "scripts": {
