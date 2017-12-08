@@ -1,9 +1,10 @@
 {
   "name": "resas",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Real estate consulting bot.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +24,8 @@
   },
   "homepage": "https://github.com/nkjm/resas#readme",
   "dependencies": {
-    "bot-express": "0.0.133",
+    "bot-express": "0.1.2",
+    "dotenv": "^4.0.0",
     "dropbox": "^2.5.12",
     "sharp": "^0.18.4"
   }
