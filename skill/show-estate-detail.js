@@ -46,19 +46,8 @@ module.exports = class SkillShowEstateDetail {
         }
     }
 
-<<<<<<< HEAD
     ask_if_interested(bot, context, hwid){
         return db.get_estate(hwid).then((response) => {
-=======
-    begin(bot, event, context, resolve, reject){
-        if (event.type != "beacon" || !event.beacon || event.beacon.type != "enter" || !event.beacon.hwid){
-            return resolve();
-        }
-        context.confirmed.hwid = event.beacon.hwid;
-
-        let tasks = [];
-        return db.get_estate(context.confirmed.hwid).then((response) => {
->>>>>>> c2024a63931386eaecfe47bcd75b7c32c0f5133e
             context.confirmed.estate = response;
             bot.change_message_to_confirm("interested", {
                 type: "template",
