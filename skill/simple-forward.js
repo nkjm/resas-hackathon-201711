@@ -1,5 +1,6 @@
 "use strict";
 
+require('dotenv').config();
 const debug = require("debug")("bot-express:skill");
 const admin_user_id = process.env.ADMIN_USER_ID;
 const db = require("../service/db");

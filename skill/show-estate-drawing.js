@@ -1,5 +1,6 @@
 "use strict";
 
+require('dotenv').config();
 const Resas = require("../service/resas");
 const resas = new Resas(process.env.RESAS_API_KEY);
 const debug = require("debug")("bot-express:skill");

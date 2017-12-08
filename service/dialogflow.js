@@ -1,9 +1,10 @@
 "use strict";
 
+require('dotenv').config();
 const request = require('request');
 const debug = require("debug")("bot-express:service");
 const URL_BASE = `https://api.api.ai/v1`;
-const APIAI_DEVELOPER_ACCESS_TOKEN = process.env.APIAI_DEVELOPER_ACCESS_TOKEN;
+const DIALOGFLOW_DEVELOPER_ACCESS_TOKEN = process.env.DIALOGFLOW_DEVELOPER_ACCESS_TOKEN;
 
 Promise = require('bluebird');
 Promise.promisifyAll(request);
@@ -12,7 +13,7 @@ module.exports = class ServiceDialogflow {
     static get_intent_list(){
         let url = URL_BASE + "/intents?v=20150910";
         let headers = {
-            "Authorization": "Bearer " + APIAI_DEVELOPER_ACCESS_TOKEN
+            "Authorization": "Bearer " + DIALOGFLOW_DEVELOPER_ACCESS_TOKEN
         }
         return request.getAsync({
             url: url,
@@ -29,7 +30,7 @@ module.exports = class ServiceDialogflow {
     static get_intent(intent_id){
         let url = URL_BASE + "/intents/" + intent_id + "?v=20150910";
         let headers = {
-            "Authorization": "Bearer " + APIAI_DEVELOPER_ACCESS_TOKEN
+            "Authorization": "Bearer " + DIALOGFLOW_DEVELOPER_ACCESS_TOKEN
         }
         return request.getAsync({
             url: url,
@@ -44,11 +45,11 @@ module.exports = class ServiceDialogflow {
     }
 
     static add_sentence(intent_id, sentence){
-        return ServiceApiai.get_intent(intent_id).then(
+        return ServiceDialogflow.get_intent(intent_id).then(
             (intent) => {
                 let url = URL_BASE + "/intents/" + intent_id + "?v=20150910";
                 let headers = {
-                    "Authorization": "Bearer " + APIAI_DEVELOPER_ACCESS_TOKEN,
+                    "Authorization": "Bearer " + DIALOGFLOW_DEVELOPER_ACCESS_TOKEN,
                     "Content-Type": "application/json; charset=utf-8"
                 }
                 intent.userSays.push({
@@ -75,7 +76,7 @@ module.exports = class ServiceDialogflow {
     static add_intent(intent_name, action, sentence, fulfillment){
         let url = URL_BASE + "/intents?v=20150910";
         let headers = {
-            "Authorization": "Bearer " + APIAI_DEVELOPER_ACCESS_TOKEN,
+            "Authorization": "Bearer " + DIALOGFLOW_DEVELOPER_ACCESS_TOKEN,
             "Content-Type": "application/json; charset=utf-8"
         }
         let intent = {
