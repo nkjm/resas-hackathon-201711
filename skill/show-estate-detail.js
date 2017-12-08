@@ -9,6 +9,14 @@ const db = require("../service/db");
 module.exports = class SkillShowEstateDetail {
     constructor(){
         this.required_parameter = {
+            hwid: { // This is for test purpose to intentionally trigger this skill.
+                message_to_confirm: {},
+                reaction: (error, value, bot, event, context, resolve, reject) => {
+                    return this.ask_if_interested(bot, context, value).then((response) => {
+                        return resolve();
+                    });
+                }
+            },
             interested: {
                 message_to_confirm: {},
                 parser: (value, bot, event, context, resolve, reject) => {
@@ -38,14 +46,8 @@ module.exports = class SkillShowEstateDetail {
         }
     }
 
-    begin(bot, event, context, resolve, reject){
-        if (event.type != "beacon" || !event.beacon || event.beacon.type != "enter" || !event.beacon.hwid){
-            return resolve();
-        }
-        context.confirmed.hwid = event.beacon.hwid;
-
-        let tasks = [];
-        return db.get_estate(context.confirmed.hwid).then((response) => {
+    ask_if_interested(bot, context, hwid){
+        return db.get_estate(hwid).then((response) => {
             context.confirmed.estate = response;
             bot.change_message_to_confirm("interested", {
                 type: "template",
@@ -64,9 +66,22 @@ module.exports = class SkillShowEstateDetail {
                 user_id: bot.extract_sender_id(),
                 type: "beacon"
             });
-        }).then((response) => {
-            return resolve();
         });
+    }
+
+    begin(bot, event, context, resolve, reject){
+        if (event.type == "message" && event.message.type == "text"){
+            // This should be test to intentionally trigger this skill.
+            return resolve();
+        } else if (event.type == "beacon" && event.beacon.type == "enter"){
+            context.confirmed.hwid = event.beacon.hwid;
+            return this.ask_if_interested(bot, context, hwid).then((response) => {
+                return resolve();
+            });
+        } else {
+            // This is unexpected event so ABEND.
+            return reject();
+        }
     }
 
     finish(bot, event, context, resolve, reject){
@@ -78,7 +93,6 @@ module.exports = class SkillShowEstateDetail {
                 return resolve();
             });
         }
-
 
         let tasks = [];
 
